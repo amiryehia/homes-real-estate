@@ -4,20 +4,20 @@ export default function Home() {
 
       <header className="header">
         <div className="logo">
-          HOMES REAL ESTATE
+          <img src="/images/logo.png" alt="Homes Real Estate Logo" />
         </div>
 
         <nav>
           <a href="#about">About</a>
           <a href="#services">Services</a>
           <a href="#offices">Offices</a>
+          <a href="/office-building">Office Buildings</a>
           <a href="#contact">Contact</a>
         </nav>
       </header>
 
 
       <section className="hero">
-
         <div className="hero-content">
 
           <h1>
@@ -38,7 +38,6 @@ export default function Home() {
           </a>
 
         </div>
-
       </section>
 
 
@@ -64,14 +63,11 @@ export default function Home() {
 
 
 
-
-
       <section id="services" className="services">
 
         <h2>
           Our Services
         </h2>
-
 
         <div className="cards">
 
@@ -104,14 +100,11 @@ export default function Home() {
 
 
 
-
-
       <section className="facts">
 
         <h2>
           Why Choose Us
         </h2>
-
 
         <div className="stats">
 
@@ -141,9 +134,6 @@ export default function Home() {
 
 
 
-
-
-
       <section id="offices" className="offices">
 
         <h2>
@@ -157,12 +147,11 @@ export default function Home() {
 
         <div className="office-grid">
 
-
           <div className="office-card">
 
             <img
-              src="https://images.unsplash.com/photo-1497366811353-6870744d04b2"
-              alt="Modern office"
+              src="/images/office1.png"
+              alt="Office 1"
             />
 
             <h3>
@@ -177,12 +166,11 @@ export default function Home() {
 
 
 
-
           <div className="office-card">
 
             <img
-              src="https://images.unsplash.com/photo-1497366754035-f200968a6e72"
-              alt="Executive office"
+              src="/images/office2.png"
+              alt="Office 2"
             />
 
             <h3>
@@ -197,12 +185,11 @@ export default function Home() {
 
 
 
-
           <div className="office-card">
 
             <img
-              src="https://images.unsplash.com/photo-1497366216548-37526070297c"
-              alt="Business center"
+              src="/images/office3.png"
+              alt="Office 3"
             />
 
             <h3>
@@ -216,12 +203,28 @@ export default function Home() {
           </div>
 
 
+
+          <div className="office-card">
+
+            <img
+              src="/images/office4.png"
+              alt="Office 4"
+            />
+
+            <h3>
+              Modern Workspaces
+            </h3>
+
+            <p>
+              Professional environments for companies.
+            </p>
+
+          </div>
+
+
         </div>
 
       </section>
-
-
-
 
 
 
@@ -239,12 +242,7 @@ export default function Home() {
           📧 amiryehia.homes@yahoo.com
         </p>
 
-        <p>
-          📍 10 Mostafa Kamel St., Maadi, Cairo, Egypt
-        </p>
-
       </section>
-
 
 
 
