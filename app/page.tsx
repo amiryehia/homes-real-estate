@@ -55,7 +55,7 @@ export default function Home() {
           </nav>
 
           <a
-            href="https://wa.me/201000000000"
+            href="https://wa.me/201223339652"
             className="nav-btn"
           >
             Contact Us
@@ -116,7 +116,7 @@ export default function Home() {
 
             <a
 
-              href="tel:+201000000000"
+              href="tel:+201223339652"
 
               className="secondary-btn"
 
@@ -404,7 +404,7 @@ export default function Home() {
                 </a>
 
                 <a
-                  href="https://wa.me/201000000000"
+                  href="https://wa.me/201223339562"
                   className="secondary-btn"
                 >
                   WhatsApp
@@ -442,14 +442,14 @@ export default function Home() {
           <div className="contact-buttons">
 
             <a
-              href="tel:+201000000000"
+              href="tel:+201223339562"
               className="primary-btn"
             >
               📞 Call Us
             </a>
 
             <a
-              href="https://wa.me/201000000000"
+              href="https://wa.me/201223339652"
               className="secondary-btn"
             >
               💬 Chat on WhatsApp
@@ -468,7 +468,7 @@ export default function Home() {
       {/* ================= FLOATING WHATSAPP ================= */}
 
       <a
-        href="https://wa.me/201000000000"
+        href="https://wa.me/201223339652"
         target="_blank"
         className="floating-whatsapp"
       >
