@@ -292,7 +292,7 @@ export default function Home() {
             <div className="office-image">
 
               <Image
-                src="/images/office-main3.jpg"
+                src="/images/office-main.jpg"
                 alt="Office Building"
                 width={650}
               
