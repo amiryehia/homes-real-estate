@@ -423,48 +423,64 @@ export default function Home() {
 
 
 
+{/* ================= CONTACT ================= */}
 
-      {/* ================= CONTACT ================= */}
+<section className="contact" id="contact">
 
-      <section className="contact" id="contact">
+  <div className="container contact-box">
 
-        <div className="container contact-box">
+    <h2>Looking For Your Next Office?</h2>
 
-          <h2>
-            Looking For Your Next Office?
-          </h2>
+    <p>
+      Contact HOMES Real Estate & Commercial today and let our specialists
+      help you find the ideal office space for your business.
+    </p>
 
-          <p>
-            Contact HOMES Real Estate & Commercial today and let our specialists
-            help you find the ideal office space for your business.
-          </p>
+    <div style={{ margin: "20px 0", fontSize: "18px" }}>
+      <strong>Email:</strong>{" "}
+      <a
+        href="mailto:amiryehia@homes-eg.com"
+        style={{ color: "#0A66C2", textDecoration: "none" }}
+      >
+        amiryehia@homes-eg.com
+      </a>
+    </div>
 
-          <div className="contact-buttons">
+    <div className="contact-buttons">
 
-            <a
-              href="tel:+201223339652"
-              className="primary-btn"
-            >
-              📞 Call Us
-            </a>
+      <a
+        href="tel:+201223339652"
+        className="primary-btn"
+      >
+        📞 Call Us
+      </a>
 
-            <a
-              href="https://wa.me/201223339652"
-              className="secondary-btn"
-            >
-              💬 Chat on WhatsApp
-            </a>
+      <a
+        href="https://wa.me/201223339652"
+        className="secondary-btn"
+      >
+        💬 Chat on WhatsApp
+      </a>
 
-          </div>
+      <a
+        href="mailto:amiryehia@homes-eg.com"
+        className="secondary-btn"
+      >
+        ✉️ Email Us
+      </a>
 
-        </div>
+    </div>
 
-      </section>
+  </div>
+
+</section>
+         
 
 
 
 
 
+         
       {/* ================= FLOATING WHATSAPP ================= */}
 
       <a
@@ -517,12 +533,19 @@ export default function Home() {
 
           </div>
 
-          <p className="copyright">
+          <div className="footer-contact">
+  <p>
+    📧{" "}
+    <a href="mailto:amiryehia@homes-eg.com">
+      amiryehia@homes-eg.com
+    </a>
+  </p>
 
-            © 2026 HOMES Real Estate & Commercial.
-            All Rights Reserved.
-
-          </p>
+  <p>
+    © 2026 HOMES Real Estate & Commercial.
+    All Rights Reserved.
+  </p>
+</div>
 
         </div>
 
