@@ -397,14 +397,14 @@ export default function Home() {
               <div className="office-buttons">
 
                 <a
-                  href="tel:+201000000000"
+                  href="tel:+201223339652"
                   className="primary-btn"
                 >
                   Call Now
                 </a>
 
                 <a
-                  href="https://wa.me/201223339562"
+                  href="https://wa.me/201223339652"
                   className="secondary-btn"
                 >
                   WhatsApp
