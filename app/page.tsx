@@ -25,7 +25,9 @@ export default function Home() {
             <Image
               src="/logo.png"
               alt="Homes Real Estate"
-              width={70}
+              width={80
+              
+              }
               height={70}
               priority
             />
@@ -290,7 +292,7 @@ export default function Home() {
             <div className="office-image">
 
               <Image
-                src="/images/office-main.jpg"
+                src="/images/office-main3.jpg"
                 alt="Office Building"
                 width={650}
               
