@@ -292,7 +292,7 @@ export default function Home() {
             <div className="office-image">
 
               <Image
-                src="/images/office-main.jpg"
+                src="/images/office-main2.jpg"
                 alt="Office Building"
                 width={650}
               
@@ -442,7 +442,7 @@ export default function Home() {
           <div className="contact-buttons">
 
             <a
-              href="tel:+201223339562"
+              href="tel:+201223339652"
               className="primary-btn"
             >
               📞 Call Us
