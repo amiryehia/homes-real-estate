@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Prime Office",
+  title: "homes-real-estate",
   description: "Commercial Real Estate in Egypt",
 };
 
