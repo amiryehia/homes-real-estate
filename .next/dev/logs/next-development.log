@@ -1,0 +1,27 @@
+{"timestamp":"00:00:03.122","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:07.188","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:08.697","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:01:26.042","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:01:31.170","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:01:34.865","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:01:35.828","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:01:54.124","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:01:55.585","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:01:56.490","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:01:57.029","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:01:57.287","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:01:57.747","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:01:58.019","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:03:06.302","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/logo.png\" \"received\" null"}
+{"timestamp":"00:03:06.347","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/hero2.jpg\" \"received\" null"}
+{"timestamp":"00:03:06.406","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:03:06.660","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/about2.jpg\" \"received\" null"}
+{"timestamp":"00:03:09.599","source":"Browser","level":"WARN","message":"Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior=\"smooth\"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior"}
+{"timestamp":"00:03:09.879","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mDetected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior=\\\"smooth\\\"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior\\u001b[39m\""}
+{"timestamp":"00:03:10.041","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/logo.png\" \"received\" null"}
+{"timestamp":"00:03:10.052","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:03:10.060","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/logo.png\" \"received\" null"}
+{"timestamp":"00:03:13.368","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:03:13.919","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/logo.png\" \"received\" null"}
+{"timestamp":"00:03:13.940","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/images/office-main.jpg\" \"received\" null"}
+{"timestamp":"00:03:13.956","source":"Server","level":"ERROR","message":"⨯ \"The requested resource isn't a valid image for\" \"/logo.png\" \"received\" null"}

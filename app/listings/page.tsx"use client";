@@ -1,0 +1,74 @@
+"use client";
+
+export default function ListingsPage() {
+  const listings = Array.from({ length: 50 }, (_, i) => ({
+    id: i + 1,
+    title: `Commercial Office ${i + 1}`,
+    location: i % 2 === 0 ? "New Cairo" : "Fifth Settlement",
+    area: `${600 + (i % 10) * 100} sqm`,
+    price: `${500000 + (i % 10) * 100000} EGP`,
+  }));
+
+  return (
+    <main>
+      <section className="listings-page">
+        <div className="container">
+
+          <div className="listings-header">
+            <h1>HOMES Office Listings</h1>
+            <p>Premium Commercial Offices Across Egypt</p>
+            <p>{listings.length} Available Listings</p>
+          </div>
+
+          <div className="listings-grid">
+            {listings.map((listing) => (
+              <div className="listing-card" key={listing.id}>
+
+                <div className="listing-content">
+                  <span className="listing-location">
+                    📍 {listing.location}
+                  </span>
+
+                  <h2>{listing.title}</h2>
+
+                  <div className="listing-details">
+                    <div>
+                      <strong>Area</strong>
+                      <p>{listing.area}</p>
+                    </div>
+
+                    <div>
+                      <strong>Price</strong>
+                      <p>{listing.price}</p>
+                    </div>
+                  </div>
+
+                  <div className="listing-buttons">
+                    <a
+                      href="tel:+201223339652"
+                      className="listing-call"
+                    >
+                      Call Now
+                    </a>
+
+                    <a
+                      href="https://wa.me/201223339652"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="listing-whatsapp"
+                    >
+                      WhatsApp
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+    </main>
+  );
+}
+
