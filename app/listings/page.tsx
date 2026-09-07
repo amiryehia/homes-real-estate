@@ -1,495 +1,341 @@
 "use client";
-import { useMemo, useState } from "react";
 
-import Image from "next/image";
-import {
-  Search,
-  MapPin,
-  Building2,
-  Phone,
-  MessageCircle,
-  X,
-} from "lucide-react";
+import { useMemo, useState } from "react";
 
 type Listing = {
   id: number;
   title: string;
   location: string;
   area: string;
-  price: number;
+  price: string;
   type: string;
   image: string;
+  parking?: string;
+  description: string;
+  features: string[];
 };
-
-const locations = [
-  "All Locations",
-  "Maadi",
-  "New Cairo",
-  "Nasr City",
-  "Heliopolis",
-  "Downtown Cairo",
-  "6th of October",
-  "Sheikh Zayed",
-];
-
-const types = [
-  "All Types",
-  "Office",
-  "Administrative Office",
-  "Corporate Office",
-  "Medical Office",
-];
 
 const listings: Listing[] = [
   {
     id: 1,
-    title: "Premium Office in Maadi",
-    location: "Maadi",
-    area: "Maadi Corniche",
-    price: 45000,
+    title: "Fully Finished Office – New Maadi",
+    location: "New Maadi",
+    area: "550 sqm",
+    price: "Contact for price",
     type: "Office",
-    image: "/images/office-main.jpg",
+    image: "/images/office-1.jpg",
+    parking: "4 cars",
+    description:
+      "Fully finished office in New Maadi. The property information shown in the original listing includes 550 sqm and parking for 4 cars.",
+    features: ["Fully finished", "550 sqm", "4 cars"],
   },
+
   {
     id: 2,
-    title: "Modern Corporate Office",
-    location: "New Cairo",
-    area: "5th Settlement",
-    price: 65000,
+    title: "Premium Office – Heliopolis Korba",
+    location: "Heliopolis – Korba Street",
+    area: "1,000 sqm",
+    price: "960,000 EGP",
     type: "Corporate Office",
-    image: "/images/office-main.jpg",
+    image: "/images/office-2.jpg",
+    parking: "2 cars",
+    description:
+      "Fully finished and unfurnished office in Heliopolis – Korba Street.",
+    features: [
+      "Fully finished",
+      "Unfurnished",
+      "Emergency exit",
+      "Electrical generator",
+      "Fire system",
+      "Central AC",
+      "2 cars",
+    ],
   },
+
   {
     id: 3,
-    title: "Executive Office Space",
-    location: "Heliopolis",
-    area: "Korba",
-    price: 38000,
+    title: "Office Building No. 2 – New Maadi",
+    location: "New Maadi",
+    area: "600 sqm",
+    price: "400,000 EGP",
     type: "Office",
-    image: "/images/office-main.jpg",
+    image: "/images/office-3.jpg",
+    parking: "5 cars",
+    description:
+      "Office Building No. 2 in New Maadi with a private entrance. The office is fully finished and was listed as under renovation and available now.",
+    features: [
+      "Fully finished",
+      "Private entrance",
+      "5 cars",
+      "Under renovation",
+      "Available now",
+    ],
   },
+
   {
     id: 4,
-    title: "Luxury Administrative Office",
-    location: "New Cairo",
-    area: "North 90th Street",
-    price: 72000,
-    type: "Administrative Office",
-    image: "/images/office-main.jpg",
+    title: "Office Building No. 6 – Smart Village",
+    location: "Smart Village – 6th of October",
+    area: "700 sqm",
+    price: "680,000 EGP",
+    type: "Corporate Office",
+    image: "/images/office-4.jpg",
+    parking: "4 cars",
+    description:
+      "Fully finished and unfurnished office in Smart Village – October.",
+    features: [
+      "Fully finished",
+      "Unfurnished",
+      "4 cars",
+      "Emergency exit",
+      "Generator",
+      "Fire system",
+      "Central AC",
+    ],
   },
+
   {
     id: 5,
-    title: "Fully Finished Office",
-    location: "Maadi",
-    area: "Degla",
-    price: 32000,
-    type: "Office",
-    image: "/images/office-main.jpg",
+    title: "Full Office Building – Furnished",
+    location: "Location as shown in original listing",
+    area: "3,350 sqm",
+    price: "280,000,000 EGP",
+    type: "Corporate Headquarters",
+    image: "/images/office-5.jpg",
+    description:
+      "Large fully furnished office property consisting of a ground floor, 3 floors and a roof. The original listing states a sale price of 280 million EGP, with a 230 million EGP down payment and 50 million EGP installment.",
+    features: [
+      "3,350 sqm",
+      "Ground floor + 3 floors + roof",
+      "Fully furnished",
+      "Elevators",
+      "230M EGP down payment",
+      "50M EGP installment",
+    ],
   },
+
   {
     id: 6,
-    title: "Business Center Office",
-    location: "Downtown Cairo",
-    area: "Tahrir",
-    price: 29000,
+    title: "CFC New Cairo – Specification No. 8",
+    location: "Ring Road – New Cairo",
+    area: "920 sqm",
+    price: "$55 / sqm including service",
     type: "Corporate Office",
-    image: "/images/office-main.jpg",
+    image: "/images/office-6.jpg",
+    description:
+      "Ground-floor office at CFC New Cairo. Fully finished and available from 1 August 2026.",
+    features: [
+      "CFC New Cairo",
+      "Ground floor",
+      "920 sqm gross area",
+      "Fully finished",
+      "Service included",
+      "Available from 1 August 2026",
+    ],
   },
+
   {
     id: 7,
-    title: "Premium Business Office",
-    location: "Nasr City",
-    area: "Makram Ebeid",
-    price: 41000,
-    type: "Office",
-    image: "/images/office-main.jpg",
+    title: "Office Building No. 6 – Katameya",
+    location: "Katameya Ring Road – New Cairo",
+    area: "1,300 sqm per floor",
+    price: "1,000 EGP/sqm Shell & Core",
+    type: "Office Building",
+    image: "/images/office-7.jpg",
+    description:
+      "Office Building No. 6 on Katameya Ring Road. The building has 3 floors, with approximately 1,300 sqm per floor.",
+    features: [
+      "3 floors",
+      "1,300 sqm each floor",
+      "Shell & Core: 1,000 EGP/sqm",
+      "Fully furnished: 1,400 EGP/sqm",
+      "Service included with furnished option",
+    ],
   },
+
   {
     id: 8,
-    title: "Large Corporate Headquarters",
-    location: "New Cairo",
-    area: "Golden Square",
-    price: 95000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
+    title: "Office Space 3 – Maadi New",
+    location: "Ring Road – Degla Maadi",
+    area: "750 sqm",
+    price: "650,000 EGP",
+    type: "Office",
+    image: "/images/office-8.jpg",
+    description:
+      "Fully finished second-floor office space in Degla Maadi. The listing includes a roof smoking area and rent including service.",
+    features: [
+      "Second floor",
+      "750 sqm",
+      "Fully finished",
+      "Roof smoking area",
+      "Rent including service",
+    ],
   },
+
   {
     id: 9,
-    title: "Modern Office Suite",
-    location: "Sheikh Zayed",
-    area: "ZED Area",
-    price: 55000,
-    type: "Office",
-    image: "/images/office-main.jpg",
+    title: "Office Floors – New Cairo",
+    location: "New Cairo – Street 90",
+    area: "3,000 sqm",
+    price: "Contact for price",
+    type: "Corporate Office",
+    image: "/images/office-9.jpg",
+    description:
+      "Office space covering the second and third floors on Street 90 in New Cairo.",
+    features: [
+      "Floors 2 + 3",
+      "3,000 sqm",
+      "New Cairo",
+      "Street 90",
+    ],
   },
+
   {
     id: 10,
-    title: "Professional Office Space",
-    location: "6th of October",
-    area: "Mall of Arabia Area",
-    price: 36000,
-    type: "Office",
-    image: "/images/office-main.jpg",
+    title: "Office Building – Sheraton",
+    location: "Sheraton – beside Mobil Station",
+    area: "950 sqm",
+    price: "200,000 EGP",
+    type: "Office Building",
+    image: "/images/office-10.jpg",
+    description:
+      "Office building in Sheraton beside the Mobil station. The property consists of 4 floors with approximately 255 sqm per floor.",
+    features: [
+      "950 sqm total",
+      "4 floors",
+      "Approximately 255 sqm per floor",
+      "Fully finished",
+      "Maintenance not included",
+    ],
   },
+
   {
     id: 11,
-    title: "Elegant Executive Office",
-    location: "Maadi",
-    area: "Maadi Gardens",
-    price: 47000,
-    type: "Office",
-    image: "/images/office-main.jpg",
+    title: "Cairo Business Complex – Sheraton",
+    location: "Sheraton – Cairo Airport",
+    area: "1,000–3,000 sqm",
+    price: "700 EGP/sqm Shell & Core",
+    type: "Corporate Office",
+    image: "/images/office-11.jpg",
+    description:
+      "Cairo Business Complex near Cairo Airport with office areas from 1,000 to 3,000 sqm.",
+    features: [
+      "1,000–3,000 sqm",
+      "2-level parking",
+      "10 cars per floor",
+      "Shell & Core: 700 EGP/sqm",
+      "Finished: 1,000 EGP/sqm",
+      "Maintenance included",
+      "Emergency exit",
+      "Generator",
+      "Fire system",
+      "Central AC",
+      "5-year contract",
+      "Finished after 7 months",
+    ],
   },
+
   {
     id: 12,
-    title: "Prime Administrative Office",
-    location: "New Cairo",
-    area: "Business District",
-    price: 68000,
-    type: "Administrative Office",
-    image: "/images/office-main.jpg",
+    title: "Office Space 3 – Sheraton",
+    location: "Sheraton / Nasr City",
+    area: "580 sqm",
+    price: "500,000+ EGP",
+    type: "Office",
+    image: "/images/office-12.jpg",
+    description:
+      "Open-space, fully finished office in Sheraton / Nasr City.",
+    features: [
+      "580 sqm",
+      "Open space",
+      "Fully finished",
+      "Emergency exit",
+      "24-hour security",
+      "Generator",
+      "Fire system",
+      "Central AC",
+      "6 bathrooms",
+    ],
   },
+
   {
     id: 13,
-    title: "Medical Office Suite",
-    location: "New Cairo",
-    area: "Medical Park",
-    price: 52000,
-    type: "Medical Office",
-    image: "/images/office-main.jpg",
+    title: "Office – Smart Village",
+    location: "Smart Village – 6th of October",
+    area: "1,033 sqm",
+    price: "450,000 EGP including service",
+    type: "Corporate Office",
+    image: "/images/office-13.jpg",
+    description:
+      "Fully finished office in Smart Village. The listing states 1,033 sqm with floor areas of approximately 400 and 600 sqm available.",
+    features: [
+      "1,033 sqm",
+      "Fully finished",
+      "400 sqm floor option",
+      "600 sqm floor option",
+      "$29/sqm",
+      "Service included",
+    ],
   },
+
   {
     id: 14,
-    title: "High-End Office",
-    location: "Heliopolis",
-    area: "El Merghany",
-    price: 43000,
+    title: "Fully Finished Office",
+    location: "Contact us for location",
+    area: "500 sqm",
+    price: "Contact for price",
     type: "Office",
-    image: "/images/office-main.jpg",
+    image: "/images/office-14.jpg",
+    parking: "6 cars",
+    description:
+      "Fully finished 500 sqm office with parking for 6 cars. The original price information in the photo was not clear enough to reproduce safely.",
+    features: [
+      "500 sqm",
+      "Fully finished",
+      "6 cars",
+    ],
   },
+
   {
     id: 15,
-    title: "Modern Business Office",
-    location: "Nasr City",
-    area: "Abbas El Akkad",
-    price: 35000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
+    title: "Office Building No. 4 – New Maadi",
+    location: "New Maadi",
+    area: "700 sqm",
+    price: "440,000 EGP including maintenance",
+    type: "Office",
+    image: "/images/office-16.jpg",
+    parking: "2 cars",
+    description:
+      "Fully finished Office Building No. 4 in New Maadi. Rent includes maintenance.",
+    features: [
+      "700 sqm",
+      "Fully finished",
+      "2 cars",
+      "Maintenance included",
+      "Generator",
+      "Emergency exit",
+      "Fiber optics",
+      "Split AC",
+    ],
   },
+
   {
     id: 16,
-    title: "Premium Office Floor",
-    location: "New Cairo",
-    area: "Downtown Katameya",
-    price: 88000,
+    title: "Office Building A12 – Smart Village",
+    location: "Smart Village – 6th of October",
+    area: "500 sqm",
+    price: "175,000 EGP including service",
     type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 17,
-    title: "Furnished Executive Office",
-    location: "Maadi",
-    area: "Zahraa Maadi",
-    price: 30000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 18,
-    title: "Contemporary Office",
-    location: "Sheikh Zayed",
-    area: "Beverly Hills",
-    price: 62000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 19,
-    title: "Corporate Office Suite",
-    location: "6th of October",
-    area: "Smart Village",
-    price: 74000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 20,
-    title: "Premium Medical Office",
-    location: "New Cairo",
-    area: "Medical District",
-    price: 59000,
-    type: "Medical Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 21,
-    title: "Executive Business Center",
-    location: "Downtown Cairo",
-    area: "Garden City",
-    price: 44000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 22,
-    title: "Luxury Office Suite",
-    location: "Maadi",
-    area: "New Maadi",
-    price: 51000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 23,
-    title: "Prime Office Location",
-    location: "Heliopolis",
-    area: "Roxy",
-    price: 39000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 24,
-    title: "Large Administrative Space",
-    location: "New Cairo",
-    area: "Cairo Festival Area",
-    price: 79000,
-    type: "Administrative Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 25,
-    title: "Modern Office Hub",
-    location: "Nasr City",
-    area: "City Stars Area",
-    price: 33000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 26,
-    title: "Premium Corporate Office",
-    location: "New Cairo",
-    area: "90th Street",
-    price: 85000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 27,
-    title: "Professional Office Suite",
-    location: "Maadi",
-    area: "Sarayat El Maadi",
-    price: 46000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 28,
-    title: "Executive Medical Office",
-    location: "New Cairo",
-    area: "New Cairo Medical Zone",
-    price: 57000,
-    type: "Medical Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 29,
-    title: "Contemporary Corporate Space",
-    location: "Sheikh Zayed",
-    area: "Arkan Area",
-    price: 69000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 30,
-    title: "Premium Office Center",
-    location: "6th of October",
-    area: "October Gardens",
-    price: 42000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 31,
-    title: "Elegant Business Office",
-    location: "Heliopolis",
-    area: "Salah Salem",
-    price: 48000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 32,
-    title: "Large Corporate Office",
-    location: "New Cairo",
-    area: "One Ninety",
-    price: 98000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 33,
-    title: "Fully Equipped Office",
-    location: "Maadi",
-    area: "Degla Square",
-    price: 37000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 34,
-    title: "Modern Administrative Suite",
-    location: "Nasr City",
-    area: "Mostashfa El Sadr",
-    price: 40000,
-    type: "Administrative Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 35,
-    title: "Prime Business Office",
-    location: "Downtown Cairo",
-    area: "Zamalek Area",
-    price: 58000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 36,
-    title: "Luxury Office Floor",
-    location: "New Cairo",
-    area: "Financial District",
-    price: 105000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 37,
-    title: "Executive Office",
-    location: "Sheikh Zayed",
-    area: "Galleria Area",
-    price: 61000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 38,
-    title: "Premium Medical Suite",
-    location: "Heliopolis",
-    area: "Al Ahram Street",
-    price: 53000,
-    type: "Medical Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 39,
-    title: "Professional Corporate Office",
-    location: "6th of October",
-    area: "Industrial Area",
-    price: 49000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 40,
-    title: "Modern Office Space",
-    location: "Maadi",
-    area: "Maadi Corniche",
-    price: 34000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 41,
-    title: "High-End Administrative Office",
-    location: "New Cairo",
-    area: "Sodic Area",
-    price: 76000,
-    type: "Administrative Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 42,
-    title: "Corporate Headquarters",
-    location: "New Cairo",
-    area: "Business Plus",
-    price: 92000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 43,
-    title: "Executive Office Suite",
-    location: "Nasr City",
-    area: "Moustafa El Nahas",
-    price: 45000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 44,
-    title: "Modern Medical Office",
-    location: "New Cairo",
-    area: "Point 90 Area",
-    price: 63000,
-    type: "Medical Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 45,
-    title: "Premium Business Space",
-    location: "Maadi",
-    area: "Laselky",
-    price: 39000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 46,
-    title: "Luxury Corporate Office",
-    location: "Sheikh Zayed",
-    area: "Capital Business Park",
-    price: 83000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 47,
-    title: "Prime Administrative Space",
-    location: "Heliopolis",
-    area: "Cleopatra",
-    price: 47000,
-    type: "Administrative Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 48,
-    title: "Large Professional Office",
-    location: "6th of October",
-    area: "Dreamland",
-    price: 54000,
-    type: "Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 49,
-    title: "Executive Corporate Suite",
-    location: "New Cairo",
-    area: "Cairo Festival City",
-    price: 89000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
-  },
-  {
-    id: 50,
-    title: "HOMES Premium Headquarters",
-    location: "New Cairo",
-    area: "Financial District",
-    price: 115000,
-    type: "Corporate Office",
-    image: "/images/office-main.jpg",
+    image: "/images/office-18.jpg",
+    description:
+      "Fully finished office in Office Building A12 at Smart Village. One floor is available.",
+    features: [
+      "500 sqm",
+      "One floor available",
+      "Fully finished",
+      "$21/sqm",
+      "Service included",
+    ],
   },
 ];
 
@@ -497,219 +343,585 @@ export default function ListingsPage() {
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("All Locations");
   const [type, setType] = useState("All Types");
-  const [maxPrice, setMaxPrice] = useState(120000);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const locations = [
+    "All Locations",
+    "New Maadi",
+    "Maadi",
+    "New Cairo",
+    "Heliopolis",
+    "Sheraton",
+    "Nasr City",
+    "Smart Village",
+    "6th of October",
+    "Katameya",
+  ];
+
+  const types = [
+    "All Types",
+    "Office",
+    "Corporate Office",
+    "Corporate Headquarters",
+    "Office Building",
+  ];
 
   const filteredListings = useMemo(() => {
-    return listings.filter((listing) => {
-      const text = search.toLowerCase();
+    const query = search.toLowerCase().trim();
 
+    return listings.filter((listing) => {
       const matchesSearch =
-        listing.title.toLowerCase().includes(text) ||
-        listing.location.toLowerCase().includes(text) ||
-        listing.area.toLowerCase().includes(text);
+        !query ||
+        listing.title.toLowerCase().includes(query) ||
+        listing.location.toLowerCase().includes(query) ||
+        listing.area.toLowerCase().includes(query) ||
+        listing.description.toLowerCase().includes(query) ||
+        listing.features.some((feature) =>
+          feature.toLowerCase().includes(query)
+        );
 
       const matchesLocation =
         location === "All Locations" ||
-        listing.location === location;
+        listing.location.toLowerCase().includes(location.toLowerCase());
 
       const matchesType =
-        type === "All Types" ||
-        listing.type === type;
+        type === "All Types" || listing.type === type;
 
-      const matchesPrice = listing.price <= maxPrice;
-
-      return (
-        matchesSearch &&
-        matchesLocation &&
-        matchesType &&
-        matchesPrice
-      );
+      return matchesSearch && matchesLocation && matchesType;
     });
-  }, [search, location, type, maxPrice]);
-
-  function clearFilters() {
-    setSearch("");
-    setLocation("All Locations");
-    setType("All Types");
-    setMaxPrice(120000);
-  }
+  }, [search, location, type]);
 
   return (
     <main className="listings-page">
-      <section className="hero">
+      <style jsx global>{`
+        * {
+          box-sizing: border-box;
+        }
+
+        body {
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+          background: #f5f8fc;
+          color: #102a43;
+        }
+
+        .listings-page {
+          min-height: 100vh;
+          background: #f5f8fc;
+        }
+
+        .listings-hero {
+          min-height: 390px;
+          padding: 100px 24px 70px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+          background:
+            linear-gradient(
+              rgba(5, 30, 65, 0.78),
+              rgba(5, 30, 65, 0.82)
+            ),
+            url("/images/hero2.jpg") center/cover;
+        }
+
+        .hero-content {
+          position: relative;
+          z-index: 2;
+          max-width: 900px;
+          color: white;
+        }
+
+        .hero-badge {
+          display: inline-block;
+          padding: 9px 18px;
+          border: 1px solid rgba(255, 255, 255, 0.4);
+          border-radius: 999px;
+          font-size: 13px;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          margin-bottom: 20px;
+          background: rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-content h1 {
+          margin: 0;
+          font-size: clamp(42px, 7vw, 72px);
+          line-height: 1;
+          font-weight: 800;
+          letter-spacing: -2px;
+        }
+
+        .hero-content p {
+          margin: 22px auto 0;
+          max-width: 700px;
+          font-size: 18px;
+          line-height: 1.7;
+          color: rgba(255, 255, 255, 0.9);
+        }
+
+        .filters-wrapper {
+          max-width: 1200px;
+          margin: -42px auto 45px;
+          padding: 0 20px;
+          position: relative;
+          z-index: 5;
+        }
+
+        .filters {
+          background: white;
+          border-radius: 18px;
+          padding: 22px;
+          box-shadow: 0 15px 45px rgba(11, 49, 88, 0.14);
+          display: grid;
+          grid-template-columns: 2fr 1fr 1fr;
+          gap: 14px;
+        }
+
+        .search-box,
+        .select-box {
+          height: 52px;
+          border: 1px solid #d9e2ec;
+          border-radius: 10px;
+          background: white;
+          color: #102a43;
+          font-size: 15px;
+          padding: 0 15px;
+          width: 100%;
+          outline: none;
+        }
+
+        .search-box:focus,
+        .select-box:focus {
+          border-color: #1769aa;
+          box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.1);
+        }
+
+        .results {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px 80px;
+        }
+
+        .results-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+          margin-bottom: 25px;
+        }
+
+        .results-header h2 {
+          margin: 0;
+          color: #0b2f55;
+          font-size: 28px;
+        }
+
+        .results-header span {
+          color: #627d98;
+          font-size: 14px;
+        }
+
+        .listings-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 25px;
+        }
+
+        .listing-card {
+          background: white;
+          border-radius: 18px;
+          overflow: hidden;
+          border: 1px solid #e1e8ef;
+          box-shadow: 0 8px 30px rgba(11, 49, 88, 0.07);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .listing-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 18px 45px rgba(11, 49, 88, 0.13);
+        }
+
+        .image-wrapper {
+          height: 280px;
+          position: relative;
+          background: #dfe7ef;
+          cursor: pointer;
+          overflow: hidden;
+        }
+
+        .listing-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.35s ease;
+        }
+
+        .image-wrapper:hover .listing-image {
+          transform: scale(1.04);
+        }
+
+        .image-label {
+          position: absolute;
+          left: 15px;
+          top: 15px;
+          padding: 7px 11px;
+          border-radius: 7px;
+          background: rgba(7, 43, 79, 0.9);
+          color: white;
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        .listing-content {
+          padding: 23px;
+        }
+
+        .listing-content h3 {
+          margin: 0 0 9px;
+          font-size: 23px;
+          line-height: 1.2;
+          color: #0b2f55;
+        }
+
+        .location {
+          margin-bottom: 18px;
+          color: #627d98;
+          font-size: 14px;
+        }
+
+        .main-info {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          margin-bottom: 18px;
+        }
+
+        .info-box {
+          padding: 13px;
+          border-radius: 10px;
+          background: #f3f7fb;
+        }
+
+        .info-label {
+          display: block;
+          font-size: 11px;
+          color: #829ab1;
+          text-transform: uppercase;
+          letter-spacing: 0.6px;
+          margin-bottom: 5px;
+        }
+
+        .info-value {
+          display: block;
+          font-size: 15px;
+          font-weight: 700;
+          color: #0b2f55;
+        }
+
+        .description {
+          color: #486581;
+          font-size: 14px;
+          line-height: 1.65;
+          margin: 0 0 18px;
+        }
+
+        .features {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 7px;
+          margin-bottom: 20px;
+        }
+
+        .feature {
+          padding: 7px 10px;
+          border-radius: 6px;
+          background: #eef5fb;
+          color: #1769aa;
+          font-size: 12px;
+          font-weight: 600;
+        }
+
+        .actions {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+
+        .action-button {
+          border: none;
+          border-radius: 9px;
+          padding: 13px 10px;
+          text-align: center;
+          text-decoration: none;
+          font-weight: 700;
+          font-size: 14px;
+          cursor: pointer;
+        }
+
+        .call-button {
+          background: #0b3d6e;
+          color: white;
+        }
+
+        .whatsapp-button {
+          background: #16804d;
+          color: white;
+        }
+
+        .empty {
+          background: white;
+          padding: 60px 20px;
+          border-radius: 16px;
+          text-align: center;
+          color: #627d98;
+        }
+
+        .empty h3 {
+          color: #0b2f55;
+          margin-top: 0;
+        }
+
+        .floating-whatsapp {
+          position: fixed;
+          right: 22px;
+          bottom: 22px;
+          z-index: 50;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #16804d;
+          color: white;
+          text-decoration: none;
+          font-size: 27px;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .lightbox {
+          position: fixed;
+          inset: 0;
+          z-index: 100;
+          background: rgba(0, 0, 0, 0.9);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 30px;
+        }
+
+        .lightbox img {
+          max-width: 95vw;
+          max-height: 90vh;
+          object-fit: contain;
+          border-radius: 8px;
+        }
+
+        .close-lightbox {
+          position: fixed;
+          top: 20px;
+          right: 25px;
+          width: 45px;
+          height: 45px;
+          border: none;
+          border-radius: 50%;
+          background: white;
+          color: #0b2f55;
+          font-size: 25px;
+          cursor: pointer;
+        }
+
+        @media (max-width: 850px) {
+          .filters {
+            grid-template-columns: 1fr;
+          }
+
+          .listings-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .listings-hero {
+            min-height: 340px;
+            padding-top: 80px;
+          }
+        }
+
+        @media (max-width: 550px) {
+          .results-header {
+            align-items: flex-start;
+            flex-direction: column;
+          }
+
+          .listing-content {
+            padding: 18px;
+          }
+
+          .image-wrapper {
+            height: 230px;
+          }
+
+          .hero-content h1 {
+            letter-spacing: -1px;
+          }
+        }
+      `}</style>
+
+      <section className="listings-hero">
         <div className="hero-content">
-          <div className="badge">
-            <Building2 size={16} />
-            HOMES REAL ESTATE
+          <div className="hero-badge">
+            HOMES Real Estate & Commercial
           </div>
 
-          <h1>
-            Find Your
-            <span>Perfect Office</span>
-          </h1>
+          <h1>Find Your Perfect Office</h1>
 
           <p>
-            Premium commercial office spaces across Cairo.
-            Find the right workplace for your business.
+            Premium commercial office spaces across Cairo and Egypt.
+            Explore verified office details, sizes, locations and prices.
           </p>
         </div>
       </section>
 
-      <section className="container">
-        <div className="search-panel">
-          <div className="search-box">
-            <Search size={20} />
+      <div className="filters-wrapper">
+        <div className="filters">
+          <input
+            className="search-box"
+            type="text"
+            placeholder="Search by office, location, size or feature..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-            <input
-              type="text"
-              placeholder="Search offices, locations or areas..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
+          <select
+            className="select-box"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          >
+            {locations.map((item) => (
+              <option key={item}>{item}</option>
+            ))}
+          </select>
 
-          <div className="filters">
-            <div>
-              <label>Location</label>
-
-              <select
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              >
-                {locations.map((item) => (
-                  <option key={item}>{item}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label>Office Type</label>
-
-              <select
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-              >
-                {types.map((item) => (
-                  <option key={item}>{item}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="price">
-              <label>
-                Maximum Monthly Rent:{" "}
-                <strong>
-                  {maxPrice.toLocaleString()} EGP
-                </strong>
-              </label>
-
-              <input
-                type="range"
-                min="20000"
-                max="120000"
-                step="5000"
-                value={maxPrice}
-                onChange={(e) =>
-                  setMaxPrice(Number(e.target.value))
-                }
-              />
-            </div>
-
-            <button onClick={clearFilters}>
-              <X size={16} />
-              Clear
-            </button>
-          </div>
+          <select
+            className="select-box"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          >
+            {types.map((item) => (
+              <option key={item}>{item}</option>
+            ))}
+          </select>
         </div>
+      </div>
 
-        <div className="results">
+      <section className="results">
+        <div className="results-header">
           <div>
-            <small>AVAILABLE OFFICES</small>
-
-            <h2>
-              {filteredListings.length} Commercial Office
-              {filteredListings.length !== 1 ? "s" : ""}
-            </h2>
+            <h2>Available Offices</h2>
+            <span>
+              {filteredListings.length} verified listings
+            </span>
           </div>
 
-          <div className="experience">
-            <strong>25+</strong>
-            <span>Years Experience</span>
-          </div>
+          <span>25+ Years Experience</span>
         </div>
 
         {filteredListings.length === 0 ? (
           <div className="empty">
-            <Building2 size={50} />
-
             <h3>No offices found</h3>
-
             <p>
-              Try changing your search or filters.
+              Try changing your search or selecting a different location.
             </p>
-
-            <button onClick={clearFilters}>
-              Reset Filters
-            </button>
           </div>
         ) : (
-          <div className="grid">
+          <div className="listings-grid">
             {filteredListings.map((listing) => (
-              <article
-                className="card"
-                key={listing.id}
-              >
-                <div className="image">
-                  <Image
+              <article className="listing-card" key={listing.id}>
+                <div
+                  className="image-wrapper"
+                  onClick={() => setSelectedImage(listing.image)}
+                >
+                  <img
+                    className="listing-image"
                     src={listing.image}
                     alt={listing.title}
-                    fill
-                    sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
                   />
 
-                  <div className="type">
-                    {listing.type}
-                  </div>
-
-                  <div className="number">
-                    #{String(listing.id).padStart(2, "0")}
+                  <div className="image-label">
+                    Office #{String(listing.id).padStart(2, "0")}
                   </div>
                 </div>
 
-                <div className="content">
-                  <div className="location">
-                    <MapPin size={15} />
-                    {listing.area}, {listing.location}
-                  </div>
-
+                <div className="listing-content">
                   <h3>{listing.title}</h3>
 
-                  <div className="price-text">
-                    <small>Starting from</small>
+                  <div className="location">
+                    📍 {listing.location}
+                  </div>
 
-                    <strong>
-                      {listing.price.toLocaleString()} EGP
-                    </strong>
+                  <div className="main-info">
+                    <div className="info-box">
+                      <span className="info-label">Area</span>
+                      <span className="info-value">
+                        {listing.area}
+                      </span>
+                    </div>
 
-                    <span>/ month</span>
+                    <div className="info-box">
+                      <span className="info-label">Price</span>
+                      <span className="info-value">
+                        {listing.price}
+                      </span>
+                    </div>
+
+                    {listing.parking && (
+                      <div className="info-box">
+                        <span className="info-label">Parking</span>
+                        <span className="info-value">
+                          {listing.parking}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="info-box">
+                      <span className="info-label">Type</span>
+                      <span className="info-value">
+                        {listing.type}
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="description">
+                    {listing.description}
+                  </p>
+
+                  <div className="features">
+                    {listing.features.map((feature) => (
+                      <span className="feature" key={feature}>
+                        {feature}
+                      </span>
+                    ))}
                   </div>
 
                   <div className="actions">
                     <a
-                      href="tel:+201000000000"
-                      className="call"
+                      className="action-button call-button"
+                      href="tel:+201223339652"
                     >
-                      <Phone size={16} />
-                      Call
+                      📞 Call
                     </a>
 
                     <a
-                      href="https://wa.me/201000000000"
+                      className="action-button whatsapp-button"
+                      href={`https://wa.me/201223339652?text=${encodeURIComponent(
+                        `Hello, I'm interested in ${listing.title} (${listing.area}) in ${listing.location}.`
+                      )}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="whatsapp"
                     >
-                      <MessageCircle size={16} />
                       WhatsApp
                     </a>
                   </div>
@@ -721,448 +933,35 @@ export default function ListingsPage() {
       </section>
 
       <a
-        href="https://wa.me/201000000000"
+        className="floating-whatsapp"
+        href="https://wa.me/201223339652"
         target="_blank"
         rel="noopener noreferrer"
-        className="floating"
+        aria-label="Contact us on WhatsApp"
       >
-        <MessageCircle size={28} />
+        💬
       </a>
 
-      <style jsx>{`
-        * {
-          box-sizing: border-box;
-        }
-
-        .listings-page {
-          min-height: 100vh;
-          background: #f5f8fc;
-          color: #102a47;
-        }
-
-        .hero {
-          min-height: 430px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          background:
-            linear-gradient(
-              135deg,
-              rgba(5, 29, 61, 0.97),
-              rgba(16, 82, 145, 0.9)
-            ),
-            url("/images/hero.jpg") center / cover;
-        }
-
-        .hero-content {
-          width: min(900px, 92%);
-          padding: 80px 0;
-          color: white;
-        }
-
-        .badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 10px 17px;
-          border: 1px solid rgba(255,255,255,.3);
-          border-radius: 50px;
-          background: rgba(255,255,255,.08);
-          font-size: 12px;
-          font-weight: 800;
-          letter-spacing: 1.5px;
-        }
-
-        .hero h1 {
-          margin: 25px 0 0;
-          font-size: clamp(45px, 7vw, 78px);
-          line-height: .98;
-          letter-spacing: -3px;
-        }
-
-        .hero h1 span {
-          display: block;
-          color: #a8d1f7;
-        }
-
-        .hero p {
-          max-width: 650px;
-          margin: 25px auto 0;
-          color: rgba(255,255,255,.8);
-          font-size: 18px;
-          line-height: 1.7;
-        }
-
-        .container {
-          width: min(1250px, 92%);
-          margin: -55px auto 80px;
-          position: relative;
-        }
-
-        .search-panel {
-          background: white;
-          padding: 25px;
-          border-radius: 20px;
-          border: 1px solid #e3eaf2;
-          box-shadow: 0 20px 60px rgba(20,50,90,.13);
-        }
-
-        .search-box {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 15px 18px;
-          border: 1px solid #dce5ee;
-          border-radius: 12px;
-          background: #f8fafc;
-          color: #56718e;
-        }
-
-        .search-box input {
-          width: 100%;
-          border: 0;
-          outline: 0;
-          background: transparent;
-          font-size: 15px;
-          color: #102a47;
-        }
-
-        .filters {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1.5fr auto;
-          gap: 15px;
-          margin-top: 18px;
-          align-items: end;
-        }
-
-        label {
-          display: block;
-          margin-bottom: 8px;
-          color: #738399;
-          font-size: 11px;
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: .7px;
-        }
-
-        select {
-          width: 100%;
-          height: 46px;
-          padding: 0 12px;
-          border: 1px solid #dce5ee;
-          border-radius: 10px;
-          background: white;
-          color: #183552;
-          outline: none;
-        }
-
-        .price strong {
-          color: #145ca8;
-          font-size: 13px;
-        }
-
-        .price input {
-          width: 100%;
-          accent-color: #145ca8;
-        }
-
-        .filters button,
-        .empty button {
-          height: 46px;
-          padding: 0 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 7px;
-          border: 1px solid #dce5ee;
-          border-radius: 10px;
-          background: white;
-          color: #63758b;
-          font-weight: 700;
-          cursor: pointer;
-        }
-
-        .results {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin: 55px 0 25px;
-        }
-
-        .results small {
-          color: #3972a8;
-          font-weight: 800;
-          letter-spacing: 1.5px;
-          font-size: 11px;
-        }
-
-        .results h2 {
-          margin: 8px 0 0;
-          font-size: 30px;
-        }
-
-        .experience {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 13px 18px;
-          background: white;
-          border: 1px solid #e3eaf2;
-          border-radius: 12px;
-        }
-
-        .experience strong {
-          font-size: 28px;
-          color: #145ca8;
-        }
-
-        .experience span {
-          font-size: 12px;
-          color: #74869b;
-          font-weight: 700;
-        }
-
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 25px;
-        }
-
-        .card {
-          overflow: hidden;
-          background: white;
-          border: 1px solid #e2e9f1;
-          border-radius: 18px;
-          box-shadow: 0 8px 30px rgba(20,50,90,.06);
-          transition: .25s ease;
-        }
-
-        .card:hover {
-          transform: translateY(-7px);
-          box-shadow: 0 20px 45px rgba(20,50,90,.14);
-        }
-
-        .image {
-          position: relative;
-          height: 235px;
-          overflow: hidden;
-          background: #dfe7ef;
-        }
-
-        .image img {
-          object-fit: cover;
-          transition: .5s ease;
-        }
-
-        .card:hover .image img {
-          transform: scale(1.06);
-        }
-
-        .type,
-        .number {
-          position: absolute;
-          top: 14px;
-          padding: 7px 10px;
-          border-radius: 8px;
-          font-size: 10px;
-          font-weight: 800;
-        }
-
-        .type {
-          left: 14px;
-          background: rgba(7,35,68,.9);
-          color: white;
-        }
-
-        .number {
-          right: 14px;
-          background: rgba(255,255,255,.92);
-          color: #183552;
-        }
-
-        .content {
-          padding: 20px;
-        }
-
-        .location {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          color: #678099;
-          font-size: 12px;
-          font-weight: 600;
-        }
-
-        .location svg {
-          color: #145ca8;
-        }
-
-        .content h3 {
-          margin: 11px 0 18px;
-          font-size: 19px;
-          line-height: 1.3;
-        }
-
-        .price-text {
-          padding-bottom: 17px;
-          border-bottom: 1px solid #edf1f5;
-        }
-
-        .price-text small {
-          display: block;
-          color: #8998a9;
-          font-size: 10px;
-          text-transform: uppercase;
-        }
-
-        .price-text strong {
-          color: #145ca8;
-          font-size: 20px;
-        }
-
-        .price-text span {
-          margin-left: 5px;
-          color: #8493a3;
-          font-size: 11px;
-        }
-
-        .actions {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 9px;
-          margin-top: 16px;
-        }
-
-        .actions a {
-          min-height: 42px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 7px;
-          border-radius: 9px;
-          text-decoration: none;
-          font-size: 13px;
-          font-weight: 800;
-        }
-
-        .call {
-          background: #edf5fc;
-          color: #145ca8;
-        }
-
-        .whatsapp {
-          background: #145ca8;
-          color: white;
-        }
-
-        .floating {
-          position: fixed;
-          right: 24px;
-          bottom: 24px;
-          width: 58px;
-          height: 58px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 50%;
-          background: #1da851;
-          color: white;
-          z-index: 100;
-          box-shadow: 0 12px 30px rgba(29,168,81,.35);
-        }
-
-        .empty {
-          padding: 80px 20px;
-          background: white;
-          border-radius: 18px;
-          text-align: center;
-        }
-
-        .empty svg {
-          color: #145ca8;
-        }
-
-        .empty h3 {
-          font-size: 24px;
-          margin: 18px 0 5px;
-        }
-
-        .empty p {
-          color: #708198;
-        }
-
-        .empty button {
-          margin: 15px auto 0;
-          background: #145ca8;
-          color: white;
-          border: 0;
-        }
-
-        @media (max-width: 1000px) {
-          .grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-
-          .filters {
-            grid-template-columns: 1fr 1fr;
-          }
-
-          .price {
-            grid-column: span 2;
-          }
-        }
-
-        @media (max-width: 650px) {
-          .hero {
-            min-height: 390px;
-          }
-
-          .hero h1 {
-            font-size: 45px;
-          }
-
-          .hero p {
-            font-size: 15px;
-          }
-
-          .container {
-            width: 94%;
-            margin-top: -30px;
-          }
-
-          .filters {
-            grid-template-columns: 1fr;
-          }
-
-          .price {
-            grid-column: auto;
-          }
-
-          .results {
-            align-items: flex-start;
-            flex-direction: column;
-            gap: 15px;
-          }
-
-          .experience {
-            width: 100%;
-          }
-
-          .grid {
-            grid-template-columns: 1fr;
-          }
-
-          .image {
-            height: 250px;
-          }
-
-          .floating {
-            right: 18px;
-            bottom: 18px;
-          }
-        }
-      `}</style>
+      {selectedImage && (
+        <div
+          className="lightbox"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            className="close-lightbox"
+            onClick={() => setSelectedImage(null)}
+            aria-label="Close image"
+          >
+            ×
+          </button>
+
+          <img
+            src={selectedImage}
+            alt="Office"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </main>
   );
 }
