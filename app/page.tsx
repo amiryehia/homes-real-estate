@@ -1,31 +1,700 @@
 "use client";
+
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Building2, Phone, Car, Ruler, BadgeCheck } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  Building2,
+  Phone,
+  MessageCircle,
+  X,
+} from "lucide-react";
 
-export default function Home() {
-  return <main>
-    <header className="navbar"><div className="container nav-inner">
-      <Link href="/" className="logo"><Image src="/logo.png" alt="Homes Real Estate" width={80} height={70} priority /><div><h2>HOMES</h2><p>Real Estate & Commercial</p></div></Link>
-      <nav><a href="#home">Home</a><a href="#about">About</a><Link href="/offices">Offices</Link><a href="#contact">Contact</a></nav>
-      <a href="https://wa.me/201223339652" className="nav-btn">Contact Us</a>
-    </div></header>
+type Listing = {
+  id: number;
+  title: string;
+  location: string;
+  area: string;
+  price: string;
+  type: string;
+  image: string;
+  parking: string;
+  description: string;
+  features: string[];
+};
 
-    <section className="hero" id="home"><Image src="/images/hero2.jpg" alt="Office Building" fill priority className="hero-image" /><div className="overlay"/><div className="hero-content">
-      <span className="small-title">COMMERCIAL REAL ESTATE</span><h1>Find Your Perfect<br/>Office Space</h1>
-      <p>HOMES Real Estate & Commercial specializes in premium office buildings, headquarters and investment opportunities across Egypt.</p>
-      <div className="hero-buttons"><Link href="/offices" className="primary-btn">Explore Offices <ArrowRight size={18}/></Link><a href="tel:+201223339652" className="secondary-btn"><Phone size={18}/> Call Now</a></div>
-    </div></section>
+const locations = [
+  "All Locations",
+  "Maadi",
+  "New Cairo",
+  "Nasr City",
+  "Heliopolis",
+  "Downtown Cairo",
+  "6th of October",
+  "Sheikh Zayed",
+];
 
-    <section className="stats"><div className="container stats-grid"><div><h2>5000+</h2><p>Properties Sold</p></div><div><h2>25+</h2><p>Years Experience</p></div><div><h2>300+</h2><p>Commercial Offices</p></div><div><h2>100%</h2><p>Business Focused</p></div></div></section>
+const officeTypes = [
+  "All Types",
+  "Office",
+  "Administrative Office",
+  "Corporate Office",
+  "Medical Office",
+];
 
-    <section className="about container" id="about"><div className="about-text"><span className="section-tag">ABOUT US</span><h2>Egypt&apos;s Trusted Commercial Real Estate Consultant</h2><p>We help businesses find premium office buildings, corporate headquarters and investment opportunities in the best commercial districts across Egypt.</p><div className="about-features"><div><Building2/><span>Premium Office Buildings</span></div><div><Ruler/><span>Large Commercial Spaces</span></div><div><Car/><span>Dedicated Parking</span></div><div><BadgeCheck/><span>Professional Brokerage</span></div></div></div><div className="about-image"><Image src="/images/about2.jpg" alt="Office" width={500} height={500}/></div></section>
+const listings: Listing[] = [
+  {
+    id: 1,
+    title: "Fully Finished Office – New Maadi",
+    location: "New Maadi",
+    area: "550 sqm",
+    price: "Contact for price",
+    type: "Office",
+    image: "/images/office-1.jpg",
+    parking: "4 cars",
+    description:
+      "Fully finished office in New Maadi with an area of 550 sqm and parking for 4 cars.",
+    features: ["Fully finished", "550 sqm", "4 cars"],
+  },
+  {
+    id: 2,
+    title: "Premium Office – Heliopolis Korba",
+    location: "Heliopolis – Korba Street",
+    area: "1,000 sqm",
+    price: "960,000 EGP",
+    type: "Corporate Office",
+    image: "/images/office-2.jpg",
+    parking: "2 cars",
+    description:
+      "Fully finished and unfurnished office in Heliopolis – Korba Street with emergency exit, electrical generator, fire system and central AC.",
+    features: [
+      "Fully finished",
+      "Unfurnished",
+      "Emergency exit",
+      "Electrical generator",
+      "Fire system",
+      "Central AC",
+      "2 cars",
+    ],
+  },
+  {
+    id: 3,
+    title: "Office Building No. 2 – New Maadi",
+    location: "New Maadi",
+    area: "600 sqm",
+    price: "400,000 EGP",
+    type: "Office",
+    image: "/images/office-3.jpg",
+    parking: "5 cars",
+    description:
+      "Fully finished office building in New Maadi with a private entrance. Under renovation and available now.",
+    features: [
+      "Fully finished",
+      "Private entrance",
+      "5 cars",
+      "Under renovation",
+      "Available now",
+    ],
+  },
+  {
+    id: 4,
+    title: "Office Building No. 6 – Smart Village",
+    location: "Smart Village – 6th of October",
+    area: "700 sqm",
+    price: "680,000 EGP",
+    type: "Corporate Office",
+    image: "/images/office-4.jpg",
+    parking: "4 cars",
+    description:
+      "Fully finished and unfurnished commercial office with emergency exit, generator, fire system and central AC.",
+    features: [
+      "Fully finished",
+      "Unfurnished",
+      "4 cars",
+      "Emergency exit",
+      "Generator",
+      "Fire system",
+      "Central AC",
+    ],
+  },
+  {
+    id: 5,
+    title: "Full Office Building – Furnished",
+    location: "Contact for location",
+    area: "3,350 sqm",
+    price: "280,000,000 EGP",
+    type: "Corporate Office",
+    image: "/images/office-5.jpg",
+    parking: "Contact us",
+    description:
+      "Fully furnished office building consisting of ground floor, 3 floors and roof, with elevators. Sale price is 280 million EGP.",
+    features: [
+      "3,350 sqm",
+      "Ground floor + 3 floors + roof",
+      "Fully furnished",
+      "Elevators",
+      "230M down payment",
+      "50M installment",
+    ],
+  },
+  {
+    id: 6,
+    title: "CFC New Cairo – Specification No. 8",
+    location: "Ring Road – New Cairo",
+    area: "920 sqm",
+    price: "$55 / sqm including service",
+    type: "Corporate Office",
+    image: "/images/office-6.jpg",
+    parking: "Contact us",
+    description:
+      "Ground floor commercial office at CFC New Cairo. Gross area is 920 sqm and the office is fully finished.",
+    features: [
+      "CFC New Cairo",
+      "Ground floor",
+      "920 sqm gross area",
+      "Fully finished",
+      "Service included",
+      "Available from 1 August 2026",
+    ],
+  },
+  {
+    id: 7,
+    title: "Office Building No. 6 – Katameya",
+    location: "Katameya Ring Road – New Cairo",
+    area: "1,300 sqm / floor",
+    price: "1,000 EGP/sqm Shell & Core",
+    type: "Office",
+    image: "/images/office-7.jpg",
+    parking: "Contact us",
+    description:
+      "Office building on Katameya Ring Road with 3 floors and approximately 1,300 sqm per floor.",
+    features: [
+      "3 floors",
+      "1,300 sqm each floor",
+      "Shell & Core 1,000 EGP/sqm",
+      "Fully furnished 1,400 EGP/sqm",
+      "Service included",
+    ],
+  },
+  {
+    id: 8,
+    title: "Office Space 3 – Maadi New",
+    location: "Ring Road – Degla Maadi",
+    area: "750 sqm",
+    price: "650,000 EGP",
+    type: "Office",
+    image: "/images/office-8.jpg",
+    parking: "Contact us",
+    description:
+      "Second-floor fully finished office space in Maadi New with an available roof smoking area. Rent includes service.",
+    features: [
+      "Second floor",
+      "750 sqm",
+      "Fully finished",
+      "Roof smoking area",
+      "Rent including service",
+    ],
+  },
+  {
+    id: 9,
+    title: "Office Floors – New Cairo",
+    location: "New Cairo – Street 90",
+    area: "3,000 sqm",
+    price: "Contact for price",
+    type: "Corporate Office",
+    image: "/images/office-9.jpg",
+    parking: "Contact us",
+    description:
+      "Large commercial office space covering floors 2 and 3 in New Cairo on Street 90.",
+    features: ["3,000 sqm", "Floors 2 + 3"],
+  },
+  {
+    id: 10,
+    title: "Office Building – Sheraton",
+    location: "Sheraton – beside Mobil Station",
+    area: "950 sqm",
+    price: "200,000 EGP",
+    type: "Office",
+    image: "/images/office-10.jpg",
+    parking: "Contact us",
+    description:
+      "Fully finished office building beside Mobil Station in Sheraton with 4 floors. Maintenance is not included.",
+    features: [
+      "950 sqm total",
+      "4 floors",
+      "Approx. 255 sqm/floor",
+      "Fully finished",
+      "Maintenance not included",
+    ],
+  },
+  {
+    id: 11,
+    title: "Cairo Business Complex – Sheraton",
+    location: "Sheraton – Cairo Airport",
+    area: "1,000–3,000 sqm",
+    price: "700 EGP/sqm Shell & Core",
+    type: "Corporate Office",
+    image: "/images/office-11.jpg",
+    parking: "10 cars per floor",
+    description:
+      "Cairo Business Complex offering 1,000 to 3,000 sqm office spaces with two-level parking.",
+    features: [
+      "2-level parking",
+      "10 cars per floor",
+      "Shell & Core 700 EGP/sqm",
+      "Finished 1,000 EGP/sqm",
+      "Maintenance included",
+      "Emergency exit",
+      "Generator",
+      "Fire system",
+      "Central AC",
+      "5-year contract",
+    ],
+  },
+  {
+    id: 12,
+    title: "Office Space 3 – Sheraton",
+    location: "Sheraton / Nasr City",
+    area: "580 sqm",
+    price: "500,000+ EGP",
+    type: "Office",
+    image: "/images/office-12.jpg",
+    parking: "Contact us",
+    description:
+      "Open-space, fully finished office with emergency exit, 24-hour security, generator, fire system, central AC and 6 bathrooms.",
+    features: [
+      "580 sqm",
+      "Open space",
+      "Fully finished",
+      "Emergency exit",
+      "24-hour security",
+      "Generator",
+      "Fire system",
+      "Central AC",
+      "6 bathrooms",
+    ],
+  },
+  {
+    id: 13,
+    title: "Office – Smart Village",
+    location: "Smart Village – 6th of October",
+    area: "1,033 sqm",
+    price: "450,000 EGP including service",
+    type: "Corporate Office",
+    image: "/images/office-13.jpg",
+    parking: "Contact us",
+    description:
+      "Fully finished office in Smart Village with floor options of approximately 400 sqm and 600 sqm.",
+    features: [
+      "1,033 sqm",
+      "Fully finished",
+      "400 sqm floor option",
+      "600 sqm floor option",
+      "$29/sqm",
+      "Service included",
+    ],
+  },
+  {
+    id: 14,
+    title: "Fully Finished Office",
+    location: "Contact for location",
+    area: "500 sqm",
+    price: "Contact for price",
+    type: "Office",
+    image: "/images/office-14.jpg",
+    parking: "6 cars",
+    description:
+      "Fully finished commercial office with an area of 500 sqm and parking for 6 cars.",
+    features: ["500 sqm", "Fully finished", "6 cars"],
+  },
+  {
+    id: 15,
+    title: "Office Building No. 4 – New Maadi",
+    location: "New Maadi",
+    area: "700 sqm",
+    price: "440,000 EGP including maintenance",
+    type: "Office",
+    image: "/images/office-16.jpg",
+    parking: "2 cars",
+    description:
+      "Fully finished office building in New Maadi with 700 sqm, 2 cars and maintenance included.",
+    features: [
+      "700 sqm",
+      "Fully finished",
+      "2 cars",
+      "Maintenance included",
+      "Generator",
+      "Emergency exit",
+      "Fiber optics",
+      "Split AC",
+    ],
+  },
+  {
+    id: 16,
+    title: "Office Building A12 – Smart Village",
+    location: "Smart Village – 6th of October",
+    area: "500 sqm",
+    price: "175,000 EGP including service",
+    type: "Corporate Office",
+    image: "/images/office-18.jpg",
+    parking: "Contact us",
+    description:
+      "Fully finished office building A12 in Smart Village. One floor is available at $21/sqm with service included.",
+    features: [
+      "500 sqm",
+      "One floor available",
+      "Fully finished",
+      "$21/sqm",
+      "Service included",
+    ],
+  },
+];
 
-    <section className="featured" id="offices"><div className="container"><div className="section-heading"><span>FEATURED OFFICE</span><h2>Premium Office Building</h2><p>A modern commercial office building designed for companies looking for premium workspace in New Cairo.</p></div><div className="office-card"><div className="office-image"><Image src="/images/office-main.jpg" alt="Office Building" width={650} height={550}/></div><div className="office-info"><h3>Office Building</h3><div className="office-grid"><Info icon={<Ruler size={28}/>} title="Area" value="1,200 sqm" extra="Fully finished • Private entrance"/><Info icon={<Car size={28}/>} title="Parking" value="8 Dedicated Spaces"/><Info icon={<Building2 size={28}/>} title="Price" value="900,000 EGP"/><Info icon={<BadgeCheck size={28}/>} title="Availability" value="Ready 60 Days After Contract Signing"/></div><div className="location-box"><h4>Location</h4><p>90 South Street, New Cairo</p></div><div className="office-buttons"><a href="tel:+201223339652" className="primary-btn">Call Now</a><a href="https://wa.me/201223339652" className="secondary-btn dark">WhatsApp</a></div></div></div></div></section>
+export default function Listings() {
+  const [search, setSearch] = useState("");
+  const [location, setLocation] = useState("All Locations");
+  const [type, setType] = useState("All Types");
+  const [maxPrice, setMaxPrice] = useState(120000);
 
-    <section className="contact" id="contact"><div className="container contact-box"><h2>Looking For Your Next Office?</h2><p>Contact HOMES Real Estate & Commercial today and let our specialists help you find the ideal office space for your business.</p><div className="email-line"><strong>Email:</strong> <a href="mailto:amiryehia@homes-eg.com">amiryehia@homes-eg.com</a></div><div className="contact-buttons"><a href="tel:+201223339652" className="primary-btn">📞 Call Us</a><a href="https://wa.me/201223339652" className="secondary-btn">💬 Chat on WhatsApp</a><a href="mailto:amiryehia@homes-eg.com" className="secondary-btn">✉️ Email Us</a></div></div></section>
-    <a href="https://wa.me/201223339652" target="_blank" rel="noreferrer" className="floating-whatsapp"><span>💬</span><div><strong>WhatsApp</strong><small>Chat with us</small></div></a>
-    <footer className="footer"><div className="container footer-content"><div className="footer-logo"><Image src="/logo.png" alt="Homes Logo" width={60} height={60}/><div><h3>HOMES</h3><p>Real Estate & Commercial</p></div></div><div className="footer-contact"><p>📧 <a href="mailto:amiryehia@homes-eg.com">amiryehia@homes-eg.com</a></p><p>© 2026 HOMES Real Estate & Commercial. All Rights Reserved.</p></div></div></footer>
-  </main>;
+  const filteredListings = useMemo(() => {
+    return listings.filter((listing) => {
+      const searchText =
+        `${listing.title} ${listing.location} ${listing.area}`.toLowerCase();
+
+      const searchMatch =
+        search.trim() === "" ||
+        searchText.includes(search.toLowerCase());
+
+      const locationMatch =
+        location === "All Locations" ||
+        listing.location.toLowerCase().includes(location.toLowerCase());
+
+      const typeMatch =
+        type === "All Types" || listing.type === type;
+
+      const numericPrice = parseFloat(
+        listing.price.replace(/[^0-9.]/g, "")
+      );
+
+      const priceMatch =
+        listing.price.toLowerCase().includes("contact") ||
+        listing.price.includes("$") ||
+        numericPrice <= maxPrice;
+
+      return (
+        searchMatch &&
+        locationMatch &&
+        typeMatch &&
+        priceMatch
+      );
+    });
+  }, [search, location, type, maxPrice]);
+
+  const clearFilters = () => {
+    setSearch("");
+    setLocation("All Locations");
+    setType("All Types");
+    setMaxPrice(120000);
+  };
+
+  return (
+    <main>
+      <header className="navbar">
+        <div className="container nav-inner">
+          <Link href="/" className="logo">
+            <Image
+              src="/logo.png"
+              alt="Homes Real Estate"
+              width={80}
+              height={70}
+            />
+
+            <div>
+              <h2>HOMES</h2>
+              <p>Real Estate & Commercial</p>
+            </div>
+          </Link>
+
+          <nav>
+            <Link href="/">Home</Link>
+            <Link href="/#about">About</Link>
+            <Link href="/listings">Offices</Link>
+            <Link href="/#contact">Contact</Link>
+          </nav>
+
+          <a
+            href="https://wa.me/201223339652"
+            className="nav-btn"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Contact Us
+          </a>
+        </div>
+      </header>
+
+      <section className="listing-hero">
+        <div className="container">
+          <Link href="/" className="back-link">
+            ← Back Home
+          </Link>
+
+          <span className="section-tag">OUR PORTFOLIO</span>
+
+          <h1>Available Offices</h1>
+
+          <p>
+            Explore premium commercial office spaces and headquarters across
+            Egypt, selected for modern businesses and investors.
+          </p>
+
+          <div className="hero-listing-stats">
+            <strong>{listings.length} verified listings</strong>
+            <span>25+ Years Experience</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="listings">
+        <div className="container">
+          <div className="filter-panel">
+            <div className="search-box">
+              <Search size={20} />
+
+              <input
+                type="text"
+                placeholder="Search offices, locations..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch("")}
+                >
+                  <X size={18} />
+                </button>
+              )}
+            </div>
+
+            <select
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            >
+              {locations.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+            >
+              {officeTypes.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+
+            <div className="price-filter">
+              <label>
+                Max Price:{" "}
+                <strong>
+                  {maxPrice.toLocaleString()} EGP
+                </strong>
+              </label>
+
+              <input
+                type="range"
+                min="20000"
+                max="120000"
+                step="5000"
+                value={maxPrice}
+                onChange={(e) =>
+                  setMaxPrice(Number(e.target.value))
+                }
+              />
+            </div>
+
+            <button
+              type="button"
+              className="clear-filters"
+              onClick={clearFilters}
+            >
+              Clear
+            </button>
+          </div>
+
+          <div className="results-header">
+            <div>
+              <span>COMMERCIAL OFFICES</span>
+
+              <h2>
+                {filteredListings.length}{" "}
+                {filteredListings.length === 1
+                  ? "Office"
+                  : "Offices"}{" "}
+                Available
+              </h2>
+            </div>
+
+            <div className="experience-badge">
+              <strong>25+</strong>
+              <span>Years Experience</span>
+            </div>
+          </div>
+
+          <div className="listing-grid">
+            {filteredListings.map((listing) => (
+              <article
+                className="listing-card"
+                key={listing.id}
+              >
+                <div className="listing-image">
+                  <Image
+                    src={listing.image}
+                    alt={listing.title}
+                    width={800}
+                    height={550}
+                  />
+
+                  <span className="listing-number">
+                    Office #{String(listing.id).padStart(2, "0")}
+                  </span>
+                </div>
+
+                <div className="listing-body">
+                  <div className="listing-location">
+                    <MapPin size={17} />
+                    {listing.location}
+                  </div>
+
+                  <h2>{listing.title}</h2>
+
+                  <div className="listing-specs">
+                    <div>
+                      <strong>{listing.area}</strong>
+                      <small>Area</small>
+                    </div>
+
+                    <div>
+                      <strong>{listing.price}</strong>
+                      <small>Price</small>
+                    </div>
+
+                    <div>
+                      <strong>{listing.parking}</strong>
+                      <small>Parking</small>
+                    </div>
+
+                    <div>
+                      <strong>{listing.type}</strong>
+                      <small>Type</small>
+                    </div>
+                  </div>
+
+                  <p className="listing-description">
+                    {listing.description}
+                  </p>
+
+                  <div className="listing-features">
+                    {listing.features.map((feature) => (
+                      <span key={feature}>{feature}</span>
+                    ))}
+                  </div>
+
+                  <div className="listing-actions">
+                    <a
+                      href="tel:+201223339652"
+                      className="primary-btn"
+                    >
+                      <Phone size={17} />
+                      Call
+                    </a>
+
+                    <a
+                      href={`https://wa.me/201223339652?text=${encodeURIComponent(
+                        `Hello HOMES, I am interested in Office #${String(
+                          listing.id
+                        ).padStart(2, "0")} - ${
+                          listing.title
+                        }. Please send me more information.`
+                      )}`}
+                      className="secondary-btn dark"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <MessageCircle size={17} />
+                      WhatsApp
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {filteredListings.length === 0 && (
+            <div className="no-results">
+              <Building2 size={45} />
+
+              <h2>No offices found</h2>
+
+              <p>
+                Try changing your search or filters.
+              </p>
+
+              <button
+                type="button"
+                onClick={clearFilters}
+              >
+                Reset Filters
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <a
+        href="https://wa.me/201223339652"
+        target="_blank"
+        rel="noreferrer"
+        className="floating-whatsapp"
+      >
+        <MessageCircle size={25} />
+
+        <div>
+          <strong>WhatsApp</strong>
+          <small>Chat with us</small>
+        </div>
+      </a>
+
+      <footer className="footer">
+        <div className="container footer-content">
+          <div className="footer-logo">
+            <Image
+              src="/logo.png"
+              alt="Homes"
+              width={60}
+              height={60}
+            />
+
+            <div>
+              <h3>HOMES</h3>
+              <p>Real Estate & Commercial</p>
+            </div>
+          </div>
+
+          <p>
+            © 2026 HOMES Real Estate & Commercial. All Rights Reserved.
+          </p>
+        </div>
+      </footer>
+    </main>
+  );
 }
-function Info({icon,title,value,extra}:{icon:React.ReactNode,title:string,value:string,extra?:string}){return <div className="info-box">{icon}<div><h4>{title}</h4><p>{value}</p>{extra&&<small>{extra}</small>}</div></div>}
