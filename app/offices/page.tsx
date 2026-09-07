@@ -3,8 +3,264 @@ import Link from "next/link";
 import { ArrowLeft, Building2, Car, Ruler, BadgeCheck, Phone } from "lucide-react";
 
 const offices = [
- {title:"Premium Office Building",location:"90 South Street, New Cairo",area:"1,200 sqm",price:"900,000 EGP",parking:"8 Spaces",image:"/images/office-main.jpg",status:"Ready in 60 Days"},
- {title:"Modern Corporate Office",location:"New Cairo Business District",area:"850 sqm",price:"Ask for Price",parking:"6 Spaces",image:"/images/office-main.jpg",status:"Available"},
- {title:"Executive Headquarters",location:"5th Settlement, New Cairo",area:"1,500 sqm",price:"Ask for Price",parking:"12 Spaces",image:"/images/office-main.jpg",status:"Available"},
+  {
+    title: "Office Building No. 2",
+    location: "New Maadi",
+    area: "600 sqm",
+    price: "400,000 EGP",
+    parking: "5 Cars",
+    image: "/images/office-3.jpg",
+    status: "Available Now",
+  },
+  {
+    title: "Fully Finished Office",
+    location: "New Maadi",
+    area: "550 sqm",
+    price: "Contact Us",
+    parking: "4 Cars",
+    image: "/images/office-1.jpg",
+    status: "Available",
+  },
+  {
+    title: "Office Building No. 6",
+    location: "Smart Village – October",
+    area: "700 sqm",
+    price: "680,000 EGP",
+    parking: "4 Cars",
+    image: "/images/office-4.jpg",
+    status: "Available",
+  },
+  {
+    title: "CFC Office – Specification No. 8",
+    location: "Ring Road, New Cairo",
+    area: "920 sqm",
+    price: "$55 / sqm",
+    parking: "Contact Us",
+    image: "/images/office-6.jpg",
+    status: "Available August 2026",
+  },
+  {
+    title: "Office Building No. 6",
+    location: "Katameya Ring Road, New Cairo",
+    area: "1,300 sqm / floor",
+    price: "1,000–1,400 EGP / sqm",
+    parking: "Contact Us",
+    image: "/images/office-7.jpg",
+    status: "Available",
+  },
+  {
+    title: "Office Space 3 – Specification No. 3",
+    location: "Ring Road, Degla Maadi",
+    area: "750 sqm",
+    price: "650,000 EGP",
+    parking: "Contact Us",
+    image: "/images/office-8.jpg",
+    status: "Available",
+  },
+  {
+    title: "Commercial Office Floors",
+    location: "New Cairo – Street 90",
+    area: "3,000 sqm",
+    price: "Contact Us",
+    parking: "Contact Us",
+    image: "/images/office-9.jpg",
+    status: "Available",
+  },
+  {
+    title: "Office Building – Sheraton",
+    location: "Sheraton, beside Mobil Station",
+    area: "950 sqm",
+    price: "200,000 EGP",
+    parking: "Contact Us",
+    image: "/images/office-10.jpg",
+    status: "Available",
+  },
+  {
+    title: "Cairo Business Complex",
+    location: "Sheraton / Cairo Airport",
+    area: "1,000–3,000 sqm",
+    price: "700–1,000 EGP / sqm",
+    parking: "10 Cars / floor",
+    image: "/images/office-11.jpg",
+    status: "Available",
+  },
+  {
+    title: "Office Space 3 – Specification No. 1",
+    location: "Sheraton / Nasr City",
+    area: "580 sqm",
+    price: "500,000+ EGP",
+    parking: "Contact Us",
+    image: "/images/office-12.jpg",
+    status: "Available",
+  },
+  {
+    title: "Smart Village Office",
+    location: "Smart Village, 6th of October",
+    area: "1,033 sqm",
+    price: "450,000 EGP",
+    parking: "Contact Us",
+    image: "/images/office-13.jpg",
+    status: "Available",
+  },
+  {
+    title: "Fully Finished Office",
+    location: "Contact Us",
+    area: "500 sqm",
+    price: "Contact Us",
+    parking: "6 Cars",
+    image: "/images/office-14.jpg",
+    status: "Available",
+  },
+  {
+    title: "Office Building No. 4",
+    location: "New Maadi",
+    area: "700 sqm",
+    price: "440,000 EGP",
+    parking: "2 Cars",
+    image: "/images/office-16.jpg",
+    status: "Available",
+  },
+  {
+    title: "Office Building A12",
+    location: "Smart Village, 6th of October",
+    area: "500 sqm",
+    price: "175,000 EGP",
+    parking: "Contact Us",
+    image: "/images/office-18.jpg",
+    status: "Available",
+  },
+  {
+    title: "Corporate Office Building",
+    location: "Contact Us",
+    area: "3,350 sqm",
+    price: "280 Million EGP",
+    parking: "Contact Us",
+    image: "/images/office-5.jpg",
+    status: "For Sale",
+  },
 ];
-export default function Offices(){return <main><header className="navbar"><div className="container nav-inner"><Link href="/" className="logo"><Image src="/logo.png" alt="Homes" width={80} height={70}/><div><h2>HOMES</h2><p>Real Estate & Commercial</p></div></Link><nav><Link href="/">Home</Link><Link href="/#about">About</Link><Link href="/offices">Offices</Link><Link href="/#contact">Contact</Link></nav><a href="https://wa.me/201223339652" className="nav-btn">Contact Us</a></div></header><section className="listing-hero"><div className="container"><Link href="/" className="back-link"><ArrowLeft size={18}/> Back Home</Link><span className="section-tag">OUR PORTFOLIO</span><h1>Commercial Office Listings</h1><p>Explore premium office spaces and headquarters across Egypt, selected for modern businesses and investors.</p></div></section><section className="listings"><div className="container listing-grid">{offices.map((o,i)=><article className="listing-card" key={i}><div className="listing-image"><Image src={o.image} alt={o.title} width={700} height={500}/><span>{o.status}</span></div><div className="listing-body"><div className="listing-location"><Building2 size={17}/> {o.location}</div><h2>{o.title}</h2><div className="listing-specs"><div><Ruler/><strong>{o.area}</strong><small>Area</small></div><div><Car/><strong>{o.parking}</strong><small>Parking</small></div><div><BadgeCheck/><strong>{o.price}</strong><small>Price</small></div></div><div className="listing-actions"><a href="tel:+201223339652" className="primary-btn"><Phone size={17}/> Call</a><a href="https://wa.me/201223339652" className="secondary-btn dark">WhatsApp</a></div></div></article>)}</div></section><footer className="footer"><div className="container footer-content"><div className="footer-logo"><Image src="/logo.png" alt="Homes" width={60} height={60}/><div><h3>HOMES</h3><p>Real Estate & Commercial</p></div></div><p>© 2026 HOMES Real Estate & Commercial. All Rights Reserved.</p></div></footer></main>}
+
+export default function Offices() {
+  return (
+    <main>
+      <header className="navbar">
+        <div className="container nav-inner">
+          <Link href="/" className="logo">
+            <Image src="/logo.png" alt="Homes" width={80} height={70} />
+            <div>
+              <h2>HOMES</h2>
+              <p>Real Estate & Commercial</p>
+            </div>
+          </Link>
+
+          <nav>
+            <Link href="/">Home</Link>
+            <Link href="/#about">About</Link>
+            <Link href="/offices">Offices</Link>
+            <Link href="/#contact">Contact</Link>
+          </nav>
+
+          <a
+            href="https://wa.me/201223339652"
+            className="nav-btn"
+          >
+            Contact Us
+          </a>
+        </div>
+      </header>
+
+      <section className="listing-hero">
+        <div className="container">
+          <Link href="/" className="back-link">
+            <ArrowLeft size={18} /> Back Home
+          </Link>
+
+          <span className="section-tag">OUR PORTFOLIO</span>
+
+          <h1>Commercial Office Listings</h1>
+
+          <p>
+            Explore premium office spaces and headquarters across Egypt,
+            selected for modern businesses and investors.
+          </p>
+        </div>
+      </section>
+
+      <section className="listings">
+        <div className="container listing-grid">
+          {offices.map((office, index) => (
+            <article className="listing-card" key={index}>
+              <div className="listing-image">
+                <Image
+                  src={office.image}
+                  alt={office.title}
+                  width={700}
+                  height={500}
+                />
+
+                <span>{office.status}</span>
+              </div>
+
+              <div className="listing-body">
+                <div className="listing-location">
+                  <Building2 size={17} />
+                  {office.location}
+                </div>
+
+                <h2>{office.title}</h2>
+
+                <div className="listing-specs">
+                  <div>
+                    <Ruler />
+                    <strong>{office.area}</strong>
+                    <small>Area</small>
+                  </div>
+
+                  <div>
+                    <Car />
+                    <strong>{office.parking}</strong>
+                    <small>Parking</small>
+                  </div>
+
+                  <div>
+                    <BadgeCheck />
+                    <strong>{office.price}</strong>
+                    <small>Price</small>
+                  </div>
+                </div>
+
+                <div className="listing-actions">
+                  <a href="tel:+201223339652" className="primary-btn">
+                    <Phone size={17} /> Call
+                  </a>
+
+                  <a
+                    href="https://wa.me/201223339652"
+                    className="secondary-btn dark"
+                  >
+                    WhatsApp
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <footer className="footer">
+        <div className="container footer-content">
+          <div className="footer-logo">
+            <Image src="/logo.png" alt="Homes" width={60} height={60} />
+
+            <div>
+              <h3>HOMES</h3>
+              <p>Real Estate & Commercial</p>
+            </div>
+          </div>
+
+          <p>© 2026 HOMES Real Estate & Commercial. All Rights Reserved.</p>
+        </div>
+      </footer>
+    </main>
+  );
+}
